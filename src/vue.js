@@ -1,3 +1,7 @@
+/**
+ * 常见的工具类
+ * 
+ */
 var _ = require('./util')
 var extend = _.extend
 
@@ -20,6 +24,7 @@ function Vue (options) {
 }
 
 /**
+ * 包括extend（vuecomponent 继承），createClass （模拟类定义），插件系统等功能
  * Mixin global API
  */
 
@@ -64,10 +69,11 @@ Object.defineProperty(p, '$data', {
 
 /**
  * Mixin internal instance methods
+ * 混入内部的api方法，以 _ 开头
  */
 
 /**
- * init 对各项公有和私有属性，initScrope（数据监控和作用域的继承），initEvents（事件）进行初始化
+ * init 对各项公有和私有属性进行初始化，initScrope（数据监控和作用域的继承），initEvents（事件）进行初始化
  */
 extend(p, require('./instance/init'))
 
@@ -77,6 +83,7 @@ extend(p, require('./instance/compile'))
 
 /**
  * Mixin public API methods
+ * 混入公共的api方法,以 $ 开头
  */
 
 extend(p, require('./api/data'))
