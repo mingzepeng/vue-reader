@@ -17,6 +17,7 @@ var strats = Object.create(null)
 
 /**
  * Helper that recursively merges two data objects together.
+ * 递归合并数据集,采用深度复制,调用$add方法复制数据
  */
 
 function mergeData (to, from) {

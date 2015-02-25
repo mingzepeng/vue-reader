@@ -7,7 +7,7 @@ var cache, tagRE, htmlRE, firstChar, lastChar
 /**
  * Escape a string so it can be used in a RegExp
  * constructor.
- *
+ *replace第二个参数中的 $& 代表所有匹配的部分
  * @param {String} str
  */
 
@@ -31,12 +31,14 @@ function compileRegex () {
   var lastCharRE = escapeRegex(lastChar)
   var openRE = escapeRegex(open)
   var closeRE = escapeRegex(close)
+  // /\{?\{\{(.+?)\}\}\}?/g
   tagRE = new RegExp(
     firstCharRE + '?' + openRE +
     '(.+?)' +
     closeRE + lastCharRE + '?',
     'g'
   )
+  //  /^\{\{\{.*\}\}\}$/
   htmlRE = new RegExp(
     '^' + firstCharRE + openRE +
     '.*' +
@@ -48,17 +50,19 @@ function compileRegex () {
 
 /**
  * Parse a template text string into an array of tokens.
- *
+ *已经阅读完毕
  * @param {String} text
  * @return {Array<Object> | null}
  *               - {String} type
  *               - {String} value
  *               - {Boolean} [html]
- *               - {Boolean} [oneTime]
+ *               - {Boolean} [oneTime] 未理解
+ *               - {Boolean} [partial] 未理解
  */
 
 exports.parse = function (text) {
   if (config._delimitersChanged) {
+    //首次初始化解析的一些正则，重置缓存
     compileRegex()
   }
   var hit = cache.get(text)
@@ -134,12 +138,29 @@ exports.tokensToExp = function (tokens, vm) {
 
 function formatToken (token, vm, single) {
   return token.tag
-    ? vm && token.oneTime
-      ? '"' + vm.$eval(token.value) + '"'
+    ? (
+      vm && token.oneTime
+      ? ('"' + vm.$eval(token.value) + '"')
       : single
-        ? token.value
+        ? (token.value)
         : inlineFilters(token.value)
-    : '"' + token.value + '"'
+      )
+
+    : ('"' + token.value + '"')
+  // 以下代码转自上述代码
+  if(token.tag){
+    if (vm && token.oneTime) {
+      return ('"' + vm.$eval(token.value) + '"')
+    }else{
+      if (single) {
+        return token.value;
+      }else{
+        return inlineFilters(token.value)
+      }
+    }
+  }else{
+    return '"' + token.value + '"'
+  }
 }
 
 /**

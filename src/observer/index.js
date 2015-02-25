@@ -152,6 +152,8 @@ p.observeArray = function (items) {
 /**
  * Convert a property into getter/setter so we can emit
  * the events when the property is accessed/changed.
+ * 对options中_data定义的数据,设置get和set,在set之后,触发相应的
+ * 更新事件。
  *
  * @param {String} key
  * @param {*} val

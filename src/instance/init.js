@@ -31,7 +31,7 @@ exports._init = function (options) {
   this.$             = {} // child vm references
   this.$$            = {} // element references
   this._watcherList  = [] // all watchers as an array
-  this._watchers     = {} // internal watchers as a hash
+  this._watchers     = {} // internal 内部 watchers as a hash
   this._userWatchers = {} // user watchers as a hash
   this._directives   = [] // all directives
 

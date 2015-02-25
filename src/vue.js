@@ -42,9 +42,9 @@ extend(Vue, require('./api/global'))
 Vue.options = {
   directives  : require('./directives'),
   filters     : require('./filters'),
-  partials    : {},
-  transitions : {},
-  components  : {}
+  partials    : {},   //未知
+  transitions : {},   //动画
+  components  : {}   //子组件
 }
 
 /**

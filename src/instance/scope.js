@@ -19,6 +19,7 @@ exports._initScope = function () {
 
 /**
  * Initialize the data. 
+ * 初始化数据
  */
 
 exports._initData = function () {
@@ -29,7 +30,9 @@ exports._initData = function () {
   var key
   while (i--) {
     key = keys[i]
+    //如果不是保留属性
     if (!_.isReserved(key)) {
+      //对该属性的 vm.key 的get和set做代理
       this._proxy(key)
     }
   }
